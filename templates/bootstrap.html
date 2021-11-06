@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load django_bootstrap5 %}
+<html lang="{{ LANGUAGE_CODE|default:'ru_ru' }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block bootstrap5_title %} Welcome! {% endblock %}</title>
+    {% bootstrap_css %}
+    {% if 'javascript_in_head'|bootstrap_setting %}
+    {% bootstrap_javascript %}
+    {% endif %}
+    {% block bootstrap5_extra_head %}{% endblock %}
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">ID Generator</a>
+            <div class="container">{% if user.is_authenticated %}</div>
+            <p>Hi {{ user }}!</p>
+            {% else %}
+            <a href="{% url 'login' %}"><button class="btn btn-primary">Log In</button></a>
+            {% endif %}
+        </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% block bootstrap5_before_content %}{% endblock %}
+        {% block bootstrap5_content %} {% endblock %}
+        {% block content %}{% endblock %}
+        {% block form %}{% endblock form %}
+        {% block bootstrap5_after_content %}{% endblock %}
+        {% block bootstrap5_extra_script %}{% endblock %}
+        <div>
+</body>
+
+</html>
