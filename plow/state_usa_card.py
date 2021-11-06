@@ -41,8 +41,11 @@ def write_usa_state(passport_card_number, nationality, surname, given_names, sex
     draw.text((570, 662), issues_on, MFC, font=MF)  # Дата выдачи
 
     draw.text((900, 662), expiries_on, MFC, font=MF)  # Дата окончания
+
     temp_face_photo_path = f'media/cfg/tmp/idcard{random.randint(1000,9999)}.png'
+
     img.save(temp_face_photo_path)
+
     return temp_face_photo_path
 
 
@@ -52,19 +55,20 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     background = Image.open(background_path).convert('RGBA')
     print('Загружен фон ', background.size)
     width, height = passport_photo.size
-    new_height = 345  # Высота
-    new_width = int(new_height * width / height)
+    print('Размер фото в паспорте', passport_photo.size)
+    new_height = 390  # Высота
+    new_width = new_height * width // height
     print(new_width)
     passport_photo = passport_photo.resize(
         (new_width, new_height), Image.ANTIALIAS)
     if passport_photo.mode != 'RGBA':
-        alpha_passpor_photo = Image.new('RGBA', (14, 14), 100)
+        alpha_passpor_photo = Image.new('RGBA', (36, 25), 100)
         passport_photo.putalpha(alpha_passpor_photo)
     paste_mask_passport_photo = passport_photo.split()[
         3].point(lambda i: i * 90 // 100)
     print(paste_mask_passport_photo)
 
-    passport_temp.paste(passport_photo, (80, SH + 125),
+    passport_temp.paste(passport_photo, (110, SH + 114),
                         mask=paste_mask_passport_photo)
 
     # img_lis = random.choice(os.listdir('media/cfg/sing_png'))
@@ -104,7 +108,7 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
 
     all_done_path = f'media/cfg/out/idcard{random.randint(1000,9999)}.png'
     print(all_done_path)
-    background.save(all_done_path, exif=img_exif_data, quality=20, subsampling=0)
+    background.save(all_done_path, exif=img_exif_data, quality=10, subsampling=0)
     return all_done_path
 
 

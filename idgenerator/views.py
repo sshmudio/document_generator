@@ -1,6 +1,4 @@
-from django.http.response import HttpResponse
 from django.shortcuts import render
-from django.views.generic.base import View
 from request_da.request_state_usa_card import request_info_state_usa_card
 from .forms import DocForm, StateCardUsaForm
 from request_da.request_data import get_data_from_form
@@ -8,12 +6,12 @@ from pathlib import Path
 from django.http import FileResponse
 from django.contrib.auth.decorators import login_required
 
-class HomeViews(View):
-    template_name = "idgenerator/home.html"
-    @login_required(login_url='/idgenerator/login/')
-    def get(self, request):
-        return render(request, self.template_name, {})
+# @login_required(login_url='/accounts/login/')
+def home(request):
 
+    return render(request, 'idgenerator/home.html', {})
+
+@login_required
 def ua_doc(request):
     if request.method == 'POST':
         form = DocForm(request.POST, request.FILES)
@@ -26,7 +24,6 @@ def ua_doc(request):
     else:
         form = DocForm()
     return render(request, 'idgenerator/ukid.html', context={'form': form})
-
 
 def get_name(request):
     if request.method == 'POST':
