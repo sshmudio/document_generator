@@ -1,17 +1,18 @@
-from django.shortcuts import render
-from request_da.request_state_usa_card import request_info_state_usa_card
-from .forms import DocForm, StateCardUsaForm
-from request_da.request_data import get_data_from_form
 from pathlib import Path
+
 from django.http import FileResponse
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from request_da.request_data import get_data_from_form
+from request_da.request_state_usa_card import request_info_state_usa_card
 
-# @login_required(login_url='/accounts/login/')
+from .forms import DocForm, StateCardUsaForm
+from .views import *
+
+
 def home(request):
-
     return render(request, 'idgenerator/home.html', {})
 
-@login_required
+
 def ua_doc(request):
     if request.method == 'POST':
         form = DocForm(request.POST, request.FILES)
@@ -24,6 +25,7 @@ def ua_doc(request):
     else:
         form = DocForm()
     return render(request, 'idgenerator/ukid.html', context={'form': form})
+
 
 def get_name(request):
     if request.method == 'POST':
@@ -38,3 +40,4 @@ def get_name(request):
         form = StateCardUsaForm()
 
     return render(request, 'idgenerator/state_card_usa.html', context={'form': form})
+
