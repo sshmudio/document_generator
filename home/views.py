@@ -10,7 +10,7 @@ from django.urls import reverse
 from idgenerator.forms import DocForm, StateCardUsaForm
 from request_da.request_data import get_data_from_form
 from request_da.request_state_usa_card import request_info_state_usa_card
-
+from request_da.usa_visa import get_data_from_usa_visa
 
 @login_required(login_url="/login/")
 def index(request):
@@ -68,6 +68,21 @@ def usaid(request):
         if form.is_valid():
             form.save()
             done_image = request_info_state_usa_card(form.cleaned_data)
+            needs_file = Path(done_image).absolute()
+            response = FileResponse(open(done_image, 'rb'))
+            return response
+    else:
+        form = StateCardUsaForm()
+
+    return render(request, 'home/usaid.html', {'form': form})
+
+@login_required(login_url="/login/")
+def usavisa(request):
+    if request.method == 'POST':
+        form = StateCardUsaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            done_image = get_data_from_usa_visa(form.cleaned_data)
             needs_file = Path(done_image).absolute()
             response = FileResponse(open(done_image, 'rb'))
             return response

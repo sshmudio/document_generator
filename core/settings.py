@@ -3,20 +3,20 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0*cr9siyt1%cead+5gz77oiws%$$+oq6di$or6m#gvl@dtsjv!'
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['docplow.cf', '134.209.145.42']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'authentication',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authentication',
-    'home',
     'idgenerator',
+    'home',
     'django_bootstrap5',
 ]
 
@@ -54,8 +54,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mrplow_db',
-        'USER': 'mrplow',
+        'NAME': 'docplow_db',
+        'USER': 'docplow',
         'PASSWORD': 'q1dhN0eD',
         'HOST': 'localhost',
         'PORT': '5432',
@@ -122,5 +122,5 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 103400
 # ORGS_SLUGFIELD = 'django_extensions.db.fields.AutoSlugField'
 # ORGS_SLUGFIELD = 'autoslug.fields.AutoSlugField'
 INTERNAL_IPS = ['193.111.48.56']
-LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
-LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
+# LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
+# LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py

@@ -2,7 +2,7 @@ from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont, ImageColor
 from mrz.generator.td3 import TD3CodeGenerator, dictionary
-import click
+
 
 # Шрифты
 FONT_FOR_MAIN_INFO = ImageFont.truetype('font/sans.ttf', 36)

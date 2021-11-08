@@ -24,10 +24,11 @@ def request_info_state_usa_card(date_form):
     if remove_bg == True:
         path = remove_background(photo_document)
         all_done = paste_photo(save_after_main_data_p, path, img_exif, background_path)
+        return all_done
     else:
         all_done = paste_photo(save_after_main_data_p, photo_document, img_exif, background_path)
         print('Путь к файлу готово', all_done)
 
-    return all_done
+        return all_done
 
 

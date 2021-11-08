@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import usaid, uaid
-from django.conf import settings
-from django.conf.urls.static import static
+from . import views
 
 urlpatterns = [
-    path('usaid/', usaid, name='usaid'),
-    path('uaid/', uaid, name='uaid'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('usaid/', views.usaid, name='usaid'),
+    path('uaid/', views.uaid, name='uaid'),
+    path('usavisa/', views.usavisa, name='usavisa'),
+]

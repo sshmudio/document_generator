@@ -1,5 +1,5 @@
 from django import forms
-from .models import DocUkraineInternational, StateCardUsa
+from .models import DocUkraineInternational, StateCardUsa, UsaVisa
 
 
 class DocForm(forms.ModelForm):
@@ -36,3 +36,23 @@ class StateCardUsaForm(forms.ModelForm):
             'remove_bg',
             'get_exif_info',
             'background_image', ]
+
+class UsaVisaForm(forms.ModelForm):
+    class Meta:
+        model = UsaVisa
+        fields = [
+            'doc_type',
+            'doc_country',
+            'surname',
+            'givenname',
+            'doc_number',
+            'nationality',
+            'birthdate',
+            'genre',
+            'doc_exp_date',
+            'optional_data',
+            'photo_document',
+            'remove_bg',
+            'get_exif_info',
+            'background_image',
+        ]
