@@ -1,14 +1,10 @@
-{% extends 'base.html' %}
-{% load djmoney %}
-{% money_localize money %}
-{% block content %}
-<div class="row">
+{% comment %} <div class="row">
     <div class="col">
         <div class="card text-center" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title">USA</h5>
                 <p class="card-text">State Card</p>
-                <a href="{% url 'stateusacard' %}" class="btn btn-primary">Сделать</a>
+                <a href="{% url 'usaid' %}" class="btn btn-primary">Сделать</a>
             </div>
         </div>
     </div>
@@ -18,8 +14,8 @@
             <div class="card-body">
                 <h5 class="card-title">Ukraine</h5>
                 <p class="card-text">International Passport</p>
-                <a href="{% url 'ua_doc' %}" class="btn btn-primary">Получить</a>
+                <a href="#" class="btn btn-primary">Получить</a>
             </div>
         </div>
     </div
-{% endblock %}
+ {% endcomment %}

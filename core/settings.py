@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0*cr9siyt1%cead+5gz77oiws%$$+oq6di$or6m#gvl@dtsjv!'
 DEBUG = True
@@ -7,21 +8,15 @@ DEBUG = True
 ALLOWED_HOSTS = ['docplow.cf', '134.209.145.42']
 
 INSTALLED_APPS = [
-    'authentication',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #
-    #
-    #
-    'djmoney',
+    'authentication',
     'home',
     'idgenerator',
-    'debug_toolbar',
     'django_bootstrap5',
 ]
 
@@ -33,11 +28,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
 
-ROOT_URLCONF = 'document_generator.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -55,7 +49,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'document_generator.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -127,10 +121,6 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 103400
 #  }
 # ORGS_SLUGFIELD = 'django_extensions.db.fields.AutoSlugField'
 # ORGS_SLUGFIELD = 'autoslug.fields.AutoSlugField'
-INTERNAL_IPS = [
-    # ...
-    '193.111.48.56',
-    # ...
-]
+INTERNAL_IPS = ['193.111.48.56']
 LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py

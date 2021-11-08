@@ -1,6 +1,5 @@
-from django import forms 
-from .models import DocUkraineInternational, StateCardUsa
 from django import forms
+from .models import DocUkraineInternational, StateCardUsa
 
 
 class DocForm(forms.ModelForm):
@@ -36,10 +35,4 @@ class StateCardUsaForm(forms.ModelForm):
             'photo_document',
             'remove_bg',
             'get_exif_info',
-            'background_image',]
-
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+            'background_image', ]

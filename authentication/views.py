@@ -1,9 +1,5 @@
 # -*- encoding: utf-8 -*-
-"""
 
-"""
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, SignUpForm
@@ -22,7 +18,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                return redirect("/home")
             else:
                 msg = 'Invalid credentials'
         else:
@@ -46,7 +42,7 @@ def register_user(request):
             msg = 'User created - please <a href="/login">login</a>.'
             success = True
 
-            return redirect("/login/")
+            # return redirect("/login/")
 
         else:
             msg = 'Form is not valid'
