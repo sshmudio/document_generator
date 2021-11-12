@@ -4,7 +4,8 @@ from typing import ValuesView
 from PIL import Image, ImageDraw, ImageFont
 
 
-MF = ImageFont.truetype('media/cfg/font/ArialNarrowBold.ttf', 45)  # Основной шрифт
+MF = ImageFont.truetype(
+    'media/cfg/font/ArialNarrowBold.ttf', 45)  # Основной шрифт
 FFMRZ = ImageFont.truetype('media/cfg/font/cour.ttf', 47)  # Шрифт для MRZ
 SANS_S = ImageFont.truetype('media/cfg/font/sans.ttf', 40)
 WIDTH = 100
@@ -12,10 +13,12 @@ SW = 576  # НАчальная ширина
 SH = 100
 MFC = (47, 47, 44)  # Основной цвет шрифта
 defaulth = 240
- 
+
+
 def write_usa_state(passport_card_number, nationality, surname, given_names, sex, date_of_birdth, place_of_birth, issues_on, expiries_on, documment_id):
-    img = Image.open('media/cfg/template/state_usa_card.png').convert('RGBA')  # Шаблон паспорта
-    
+    # Шаблон паспорта
+    img = Image.open('media/cfg/template/state_usa_card.png').convert('RGBA')
+
     draw = ImageDraw.Draw(img)
 
     draw.text((890, 195), passport_card_number, MFC,  font=MF)
@@ -24,12 +27,14 @@ def write_usa_state(passport_card_number, nationality, surname, given_names, sex
 
     draw.text((SW, defaulth+70), surname, MFC, font=MF)  # Фамилия
 
-    draw.text((SW, defaulth+155), given_names, MFC, font=MF)  # Имя влядельца документа
+    draw.text((SW, defaulth+155), given_names, MFC,
+              font=MF)  # Имя влядельца документа
 
     draw.text((575, 241), nationality, MFC, font=MF)  # Гражданство
-    
-    draw.text((SW+145, defaulth+245), date_of_birdth, MFC, font=MF)  # Дата рождения
-    
+
+    draw.text((SW+145, defaulth+245), date_of_birdth,
+              MFC, font=MF)  # Дата рождения
+
     draw.text((SW, defaulth+245), sex, MFC, font=MF)  # Пол
 
     # draw.text((116, 594), documment_id, MFC, font=MF)  # Персональный номер
@@ -53,19 +58,29 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     passport_temp = Image.open(passport_temp_path).convert('RGBA')
     passport_photo = Image.open(pasport_photo_path).convert('RGBA')
     background = Image.open(background_path).convert('RGBA')
+
     print('Загружен фон ', background.size)
+
     width, height = passport_photo.size
+
     print('Размер фото в паспорте', passport_photo.size)
-    new_height = 390  # Высота
-    new_width = new_height * width // height
+
+    new_height = 360  # Высота
+
+    new_width = int(new_height * width / height)
+
     print(new_width)
+
     passport_photo = passport_photo.resize(
         (new_width, new_height), Image.ANTIALIAS)
+
     if passport_photo.mode != 'RGBA':
         alpha_passpor_photo = Image.new('RGBA', (36, 25), 100)
         passport_photo.putalpha(alpha_passpor_photo)
+
     paste_mask_passport_photo = passport_photo.split()[
         3].point(lambda i: i * 90 // 100)
+
     print(paste_mask_passport_photo)
 
     passport_temp.paste(passport_photo, (110, SH + 114),
@@ -106,13 +121,10 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     # background.paste(background_new, position)
     background.paste(im, position, mask=im)
 
-    all_done_path = f'media/cfg/out/idcard{random.randint(1000,9999)}.png'
+    all_done_path = f'media/cfg/out/idcard{random.randint(1000,9999)}.jpeg'
+
     print(all_done_path)
-    background.save(all_done_path, exif=img_exif_data, quality=10, subsampling=0)
+    background.convert('RGB').save(
+        all_done_path, exif=img_exif_data, quality=100, subsampling=0)
+
     return all_done_path
-
-
-# write_main_data('A8928398293', 'USA', 'John', 'Ebobo', 'M', '21 JAN 1986',
-#                 'NEW YORK USA', '21 JAN 2006', '21 JAN 2020', 'A12345', 'Pathpath')
-
-# paste_photo('media/cfg/template/state_usa_card.png' , 'media/cfg/input/lebed.jpg', 'media/cfg/background_image/IMG_20211008_152436.jpg', 'media/cfg/background_image/IMG_20211008_152436.jpg')

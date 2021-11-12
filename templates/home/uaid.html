@@ -1,13 +1,16 @@
 {% extends 'layouts/base.html' %}
 
+{% block title %} Usa iD {% endblock %} 
+
+{% block stylesheets %}{% endblock stylesheets %}
+
 {% block content %}
-<form method="post">
+<form method="post" enctype="multipart/form-data">
   {% csrf_token %}
     <div class="form-group">
-    <label>{{ field }}</label>
-        {{ form.as_ul }}
+    <label>{{ field.label }}</label>
+        {{ form.as_p }}
     </div>
   <button type="submit" class="btn btn-success">Generate</button>
 </form>
-
-{% endblock content %}
+{% endblock %}

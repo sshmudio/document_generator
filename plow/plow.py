@@ -20,9 +20,9 @@ SW = 440  # НАчальная ширина
 SH = 1060
 MFC = (40, 40, 40)  # Основной цвет шрифта
 
- 
+
 def dt(datestr):
-    s = " " 
+    s = " "
     d = datetime.datetime.strptime(datestr, '%y%m%d')  # YYMMDD
     print('Дата в функции dt', d)
     en_mouth = format_date(d, "MMM", locale='en')
@@ -53,7 +53,8 @@ def write_main_data(
 
     draw.text((WIDTH + 140, SH), str(country), MFC, font=MF)  # Страна выдачи
 
-    draw.text((WIDTH + 489, SH),  passport_number, MFC, font=MF)  # Уникальный номер документа
+    draw.text((WIDTH + 489, SH),  passport_number, MFC,
+              font=MF)  # Уникальный номер документа
 
     draw.text(
         (WIDTH, SH + 67),
@@ -164,10 +165,10 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     passport_temp = Image.open(passport_temp_path).convert(
         'RGBA').crop((13, 13, 1330, 1873))
     passport_photo = Image.open(pasport_photo_path).convert('RGBA')
-    background = Image.open(background_path).convert('RGBA')
+    background = Image.open(background_path)
     print('Загружен фон ', background.size)
     width, height = passport_photo.size
-    new_height = 383  # Высота
+    new_height = 360  # Высота
     new_width = int(new_height * width / height)
     print(new_width)
     passport_photo = passport_photo.resize(
@@ -179,7 +180,7 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
         3].point(lambda i: i * 90 // 100)
     print(paste_mask_passport_photo)
 
-    passport_temp.paste(passport_photo, (80, SH + 125),
+    passport_temp.paste(passport_photo, (60, SH + 125),
                         mask=paste_mask_passport_photo)
 
     img_lis = random.choice(os.listdir('media/cfg/sing_png'))
@@ -219,14 +220,6 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     # background.paste(background_new, position)
     background.paste(im, position, mask=im)
 
-    all_done_path = f'media/cfg/out/passport{random.randint(1000,9999)}.png'
-
-    background.save(all_done_path, exif=img_exif_data)
+    all_done_path = f'media/cfg/out/passport{random.randint(1000,9999)}.jpeg'
+    background.convert('RGB').save(all_done_path, exif=img_exif_data)
     return all_done_path
-
-
-def creator_archive(file):
-    zipObj = ZipFile('img.zip', 'w')
-    zipObj.write(file)
-    zipObj.close()
-    return zipObj

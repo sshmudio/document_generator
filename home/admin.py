@@ -1,3 +1,6 @@
 from django.contrib import admin
+from home.models import DocUkraineInternational, StateCardUsa, UsaVisa
 
-# Register your models here.
+admin.site.register(DocUkraineInternational)
+admin.site.register(StateCardUsa)
+admin.site.register(UsaVisa)

@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "document_generator"
+version = "0.1.0"
+description = ""
+authors = ["sshmudio"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^3.2.9"
+gunicorn = "^20.1.0"
+psycopg2-binary = "^2.9.2"
+django-bootstrap5 = "^21.1"
+django-bootstrap-v5 = "^1.0.7"
+django-debug-toolbar = "^3.2.2"
+Babel = "^2.9.1"
+mrz = "^0.6.2"
+Pillow = "^8.4.0"
+transliterate = "^1.10.2"
+psycopg2 = "^2.9.2"
+
+[tool.poetry.dev-dependencies]
+pydocstyle = "^6.1.1"
+autopep8 = "^1.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

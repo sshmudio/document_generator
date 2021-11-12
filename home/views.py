@@ -1,48 +1,26 @@
 # -*- encoding: utf-8 -*-
 from pathlib import Path
-from django import template
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
 from django.http.response import FileResponse
 from django.shortcuts import render
-from django.template import loader
-from django.urls import reverse
-from idgenerator.forms import DocForm, StateCardUsaForm
-from request_da.request_data import get_data_from_form
-from request_da.request_state_usa_card import request_info_state_usa_card
+from authentication.models import UserBalance
+from home.forms import DocForm, StateCardUsaForm, UsaVisaForm
+from request_da.ua_int import get_data_from_form
+from request_da.us_state import request_info_state_usa_card
 from request_da.usa_visa import get_data_from_usa_visa
-
-@login_required(login_url="/login/")
-def index(request):
-    context = {'segment': 'index'}
-
-    return render(request, 'home/index.html', context)
+from decimal import *
+from django.views.generic import View
+from .utils import ObjectsHomeMixin
 
 
-@login_required(login_url="/login/")
-def pages(request):
-    context = {}
-    # All resource paths end in .html.
-    # Pick out the html file name from the url. And load that template.
-    try:
+class HomePage(ObjectsHomeMixin, View):
+    model = UserBalance
+    template = 'home/index.html'
 
-        load_template = request.path.split('/')[-1]
 
-        if load_template == 'admin':
-            return HttpResponseRedirect(reverse('admin:index'))
-        context['segment'] = load_template
-
-        html_template = loader.get_template('home/' + load_template)
-        return HttpResponse(html_template.render(context, request))
-
-    except template.TemplateDoesNotExist:
-
-        html_template = loader.get_template('home/page-404.html')
-        return HttpResponse(html_template.render(context, request))
-
-    except:
-        html_template = loader.get_template('home/page-500.html')
-        return HttpResponse(html_template.render(context, request))
+class BillingPage(ObjectsHomeMixin, View):
+    model = UserBalance
+    template = 'home/billing.html'
 
 
 @login_required(login_url="/login/")
@@ -63,6 +41,8 @@ def uaid(request):
 
 @login_required(login_url="/login/")
 def usaid(request):
+    bal = UserBalance.objects.get(user_id=request.user.id)
+    print(bal.balance)
     if request.method == 'POST':
         form = StateCardUsaForm(request.POST, request.FILES)
         if form.is_valid():
@@ -70,16 +50,20 @@ def usaid(request):
             done_image = request_info_state_usa_card(form.cleaned_data)
             needs_file = Path(done_image).absolute()
             response = FileResponse(open(done_image, 'rb'))
+            bal.balance -= 1
+            bal.save()
             return response
+
     else:
         form = StateCardUsaForm()
 
     return render(request, 'home/usaid.html', {'form': form})
 
+
 @login_required(login_url="/login/")
 def usavisa(request):
     if request.method == 'POST':
-        form = StateCardUsaForm(request.POST, request.FILES)
+        form = UsaVisaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             done_image = get_data_from_usa_visa(form.cleaned_data)
@@ -87,6 +71,6 @@ def usavisa(request):
             response = FileResponse(open(done_image, 'rb'))
             return response
     else:
-        form = StateCardUsaForm()
+        form = UsaVisaForm()
 
     return render(request, 'home/usaid.html', {'form': form})

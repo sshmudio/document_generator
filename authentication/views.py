@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, SignUpForm
@@ -7,11 +5,8 @@ from .forms import LoginForm, SignUpForm
 
 def login_view(request):
     form = LoginForm(request.POST or None)
-
     msg = None
-
     if request.method == "POST":
-
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
@@ -42,7 +37,7 @@ def register_user(request):
             msg = 'User created - please <a href="/login">login</a>.'
             success = True
 
-            return redirect("/login/")
+            # return redirect("/login/")
 
         else:
             msg = 'Form is not valid'
