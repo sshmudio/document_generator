@@ -1,53 +1,58 @@
 {% extends "layouts/base.html" %}
 {% load static %}
+
 {% block title %} Dashboard {% endblock %}
 {% block content %}
-
-<div class="row">
+<div class="container">
+    <div class="row py-2">
     <div class="col">
         <div class="card text-center" style="width: 18rem;">
-          {% comment %} <img class="card-img-top" src="{% static '/tmp/id_state_temp.png' %}">     {% endcomment %}
             <div class="card-body">
                 <h5 class="card-title">USA</h5>
                 <p class="card-text">State Card</p>
-                {% if curr_balance < 1 %}
+                {% for object in objects %}
+                {% if object.user_balance < 1 %}
                 <a href="{% url 'billing' %}" class="btn btn-primary">Top-Up</a>
                 {% else %}
                 <a href="{% url 'usaid' %}" class="btn btn-primary">Get</a>
                 {% endif %}
+                {% endfor %}
             </div>
-        </div>
-    </div>
+                </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Ukraine</h5>
+                                <p class="card-text">International passport</p>
+                                {% for object in objects %}
 
-    <div class="col">
-        <div class="card text-center" style="width: 18rem;">
+                                {% if object.user_balance < 1 %}
+                                <a href="{% url 'billing' %}" class="btn btn-primary">Top-Up</a>
+                                 {% else %}
+                                <a href="{% url 'uaid' %}" class="btn btn-primary">Get</a>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">USA VISA</h5>
+                                <p class="card-text">(PASSPORT)</p>
+                                {% for object in objects %}
 
-        {% comment %} <img class="img-fluid mx-auto w-50" src="{% static '/tmp/template_ua.jpeg' %}"> {% endcomment %}
-            <div class="card-body">
-                <h5 class="card-title">Ukraine</h5>
-                <p class="card-text">International Passport</p>
-                {% if curr_balance < 1 %}
-                <a href="{% url 'billing' %}" class="btn btn-primary">Top-Up</a>
-                {% else %}
-                <a href="{% url 'uaid' %}" class="btn btn-primary">Get</a>
-                {% endif %}
-
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card text-center" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">USA VISA</h5>
-                <p class="card-text">(PASSPORT)</p>
-                                {% if curr_balance < 1 %}
-                <a href="{% url 'billing' %}" class="btn btn-primary">Top-Up</a>
-                {% else %}
-                <a href="{% url 'usavisa' %}" class="btn btn-primary">Get</a>
-                {% endif %}
-
-            </div>
-        </div>
-    </div 
-
+                                {% if object.user_balance < 1 %}
+                                <a href="{% url 'billing' %}" class="btn btn-primary">Top-Up</a>
+                                {% else %}
+                                <a href="{% url 'usavisa' %}" class="btn btn-primary">Get</a>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+</div>
+{% comment %} {% include 'home/docsintegrate.html' %} {% endcomment %}
 {% endblock %}

@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.translation import gettext as _
 
 CHOICE_DATE = [
     ('JAN', 'СІЧ/JAN'),
@@ -20,6 +19,7 @@ GENDER_CHOICE = [
     ('M', 'Ч/M'),
     ('F', 'Ж/F')
 ]
+
 
 class DocUkraineInternational(models.Model):
     typedoc = models.CharField(
@@ -103,22 +103,22 @@ class UsaVisa(models.Model):
     doc_country = models.CharField(verbose_name='Document country', max_length=3, default='USA')
     surname = models.CharField(verbose_name='Surname(s)', max_length=25, default='MUSTAINE')
     givenname = models.CharField(verbose_name='Given name(s)', max_length=25, default='JOHN')
-    doc_number = models.CharField(verbose_name='Document number', max_length=9,default='123456789')
+    doc_number = models.CharField(verbose_name='Document number', max_length=9, default='123456789')
     nationality = models.CharField(verbose_name='Nationality', max_length=4, default='CAN')
     birthdate = models.CharField(verbose_name='Birth date', max_length=6, default='991220')
     genre = models.CharField(verbose_name='Genre', choices=EN_GENRE, max_length=1, default='F')
     doc_exp_date = models.CharField(verbose_name='Expiry date', max_length=6, default='991220')
-    optional_data = models.CharField(verbose_name='Optional data', max_length=16, default='B3XLC000FD142955', blank=True)
+    optional_data = models.CharField(verbose_name='Optional data', max_length=16,
+                                     default='B3XLC000FD142955', blank=True)
     photo_document = models.ImageField(verbose_name="Photo iD", upload_to="media/cfg/usa/usavisa/", blank=True)
     remove_bg = models.BooleanField(verbose_name='Remove background [BETA]', default=False)
     get_exif_info = models.ImageField(verbose_name='Load image  EXIF', upload_to='media/cfg/usa/exif_tool/', blank=True)
-    background_image = models.ImageField(verbose_name='Загрузить фон', upload_to='media/cfg/usa/background_image/', blank=True)
-    
-
+    background_image = models.ImageField(verbose_name='Загрузить фон',
+                                         upload_to='media/cfg/usa/background_image/', blank=True)
 
     class Meta:
-        verbose_name = _("Usa Visa")
-        verbose_name_plural = _("Usa Visas")
+        verbose_name = "Usa Visa"
+        verbose_name_plural = "Usa Visas"
 
     def __str__(self):
         return self.givenname

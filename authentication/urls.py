@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
-from .views import login_view, register_user
+from .views import *
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [

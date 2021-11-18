@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from pathlib import Path
+from wallets.models import UserBalance
 
 
 class ObjectsHomeMixin:
@@ -6,10 +8,15 @@ class ObjectsHomeMixin:
     template = None
 
     def get(self, request):
-        obj = self.model.objects.all()
-        for value in obj:
-            curr_balance = value.balance
-            context = {
-                self.model.__name__.lower(): obj
-            }
+        objects = UserBalance.objects.filter(username=request.user)
+        dirs = []
+        p = Path('media/conf/')
+        for x in p.iterdir():
+            dirs.append(x.name)
+        context = {
+            'objects': objects,
+            'dirs': dirs,
+
+        }
+
         return render(request, self.template, context)

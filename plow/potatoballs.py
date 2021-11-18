@@ -167,7 +167,7 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     print('Загружен фон ', background.size)
     width, height = passport_photo.size
     print('Размер фото в паспорте', passport_photo.size)
-    new_height = 450  # Высота
+    new_height = 360  # Высота
     new_width = new_height * width // height
     print(new_width)
     passport_photo = passport_photo.resize(
@@ -192,7 +192,7 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     img_exif_data = im.getexif()
     passport_temp_crop = passport_temp.copy()
     w, h = passport_temp_crop.size
-    nh = 500  # Высота
+    nh = 390  # Высота
     nw = int(nh * w / h)
     im = passport_temp_crop.resize((nw, nh), Image.ANTIALIAS)
     im = passport_temp.copy()

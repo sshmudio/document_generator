@@ -37,6 +37,7 @@ class StateCardUsaForm(forms.ModelForm):
             'get_exif_info',
             'background_image', ]
 
+
 class UsaVisaForm(forms.ModelForm):
     class Meta:
         model = UsaVisa

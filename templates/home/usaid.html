@@ -2,6 +2,9 @@
 {% block title %} Usa iD {% endblock %} 
 {% block stylesheets %}{% endblock stylesheets %}
 {% block content %}
+{% if info_user %}
+<p>{{info_user}}</p>
+{% endif %}
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group">
