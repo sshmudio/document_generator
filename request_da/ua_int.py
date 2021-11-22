@@ -1,6 +1,9 @@
 from plow.plow import *
 from plow.rand_let import issuing_d, exp_date_r, generator_unique_id
 import random
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def get_data_from_form(date_form):
@@ -29,8 +32,9 @@ def get_data_from_form(date_form):
     mrz = TD3CodeGenerator('P', country, surname, given_name, passport_number, nationality,
                            bdate_for_mrz, genre, exp_date, passport_number, dictionary.cyrillic_ukrainian())
 
-    save_after_main_data_p = write_main_data(mrz, f'media/cfg/tmp/after_m_data{random.randint(1000,9999)}.png', 'P', country, passport_number, surname, given_name, genre, birth_date,
-                                             data_start, exp_date, personal_number)
+    save_after_main_data_p = write_main_data(
+        mrz, f'media/cfg/tmp/after_m_data{random.randint(1000,9999)}.png', 'P', country, passport_number, surname,
+        given_name, genre, birth_date, data_start, exp_date, personal_number)
     print('путь после записи основных данных', save_after_main_data_p)
     write_id_path = write_id(save_after_main_data_p,
                              passport_number)  # вставка id слева

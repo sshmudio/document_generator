@@ -1,4 +1,5 @@
 from pathlib import Path
+from types import TracebackType
 
 from django.contrib.auth.decorators import login_required
 from django.http.response import FileResponse
@@ -7,7 +8,7 @@ from django.views.generic import View
 from request_da.ua_int import get_data_from_form
 from request_da.us_state import request_info_state_usa_card
 from request_da.usa_visa import get_data_from_usa_visa
-from wallets.models import UserBalance
+from wallets.models import Transactions, UserBalance
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import DocForm, StateCardUsaForm, UsaVisaForm
@@ -42,7 +43,6 @@ def uaid(request):
             else:
                 bal.user_balance -= 1
                 bal.save()
-
                 return response
 
     else:
@@ -63,7 +63,7 @@ def usaid(request):
             if bal.user_balance < 1:
                 return redirect('/home/billing/')
             else:
-                bal.user_balance -= 1
+                bal.user_balance -= 3
                 bal.save()
 
                 return response
@@ -89,7 +89,7 @@ def usavisa(request):
             if bal.user_balance < 1:
                 return redirect('/home/billing/')
             else:
-                bal.user_balance -= 1
+                bal.user_balance -= 3
                 bal.save()
 
                 return response

@@ -1,6 +1,4 @@
-import os
 import random
-from typing import ValuesView
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -15,7 +13,9 @@ MFC = (47, 47, 44)  # Основной цвет шрифта
 defaulth = 240
 
 
-def write_usa_state(passport_card_number, nationality, surname, given_names, sex, date_of_birdth, place_of_birth, issues_on, expiries_on, documment_id):
+def write_usa_state(
+        passport_card_number, nationality, surname, given_names, sex, date_of_birdth, place_of_birth, issues_on,
+        expiries_on, documment_id):
     # Шаблон паспорта
     img = Image.open('media/cfg/template/state_usa_card.png').convert('RGBA')
 

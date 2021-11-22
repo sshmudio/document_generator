@@ -1,10 +1,11 @@
+import os
 from django.contrib.messages import constants as message_constants
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0*cr9siyt1%cead+5gz77oiws%$$+oq6di$or6m#gvl@dtsjv!'
 DEBUG = False
-MESSAGE_LEVEL = message_constants.DEBUG
+MESSAGE_LEVEL = message_constants.ERROR
 ALLOWED_HOSTS = ['docplow.cf', '167.71.61.95']
 
 INSTALLED_APPS = [
@@ -21,6 +22,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'djmoney',
     'django_user_agents',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
@@ -105,14 +107,21 @@ INTERNAL_IPS = [
     '93.73.62.199',
 ]
 
-# AUTH_USER_MODEL = 'authentication.MyUser'
-
-# CRYPTO SETTINGS
-
-
-# Cache backend is optional, but recommended to speed up user agent parsing
-
-
-# Name of cache backend to cache user agents. If it not specified default
-# cache alias will be used. Set to `None` to disable caching.
-USER_AGENTS_CACHE = 'default'
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}

@@ -13,7 +13,7 @@ class UserBalance(models.Model):
 
 
 class Transactions(models.Model):
-    user = models.ForeignKey(UserBalance, on_delete=models.PROTECT)
+    username = models.ForeignKey(UserBalance, on_delete=models.PROTECT)
     date = models.DateTimeField(auto_now_add=True)
     product = models.CharField(max_length=200)
 
