@@ -15,11 +15,6 @@ class Documents(models.Model):
     documment_id = models.CharField(verbose_name='documment_id ', max_length=25)
     photo_document = models.CharField(verbose_name='photo_document ', max_length=25)
 
-
-class Country(models.Model):
-    country = coun
-
-
 class ConfigureHomePage(models.Model):
     name = models.CharField('Name', max_length=200)
     folder = models.CharField('Path folder', max_length=128)
