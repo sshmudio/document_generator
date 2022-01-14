@@ -1,5 +1,7 @@
 from pathlib import Path
-from types import TracebackType
+from mrz.generator.mrva import MRVACodeGenerator
+from mrz.generator.td3 import *
+from django.views.generic.edit import FormView
 
 from django.contrib.auth.decorators import login_required
 from django.http.response import FileResponse
@@ -11,8 +13,14 @@ from request_da.usa_visa import get_data_from_usa_visa
 from wallets.models import Transactions, UserBalance
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import DocForm, StateCardUsaForm, UsaVisaForm
-from .utils import ObjectsHomeMixin
+from .forms import DocForm, StateCardUsaForm, UsaVisaForm, DocumentsFieldsForm
+from .utils import ObjectsHomeMixin, ObjectsProfileMixin
+from confighelper.models import DocumentsFields
+
+
+class UserProfile(LoginRequiredMixin, ObjectsProfileMixin,  View):
+    model = UserBalance
+    template = 'home/profile.html'
 
 
 class HomePage(ObjectsHomeMixin, View):
@@ -24,6 +32,63 @@ class HomePage(ObjectsHomeMixin, View):
 class BillingPage(LoginRequiredMixin, ObjectsHomeMixin, View):
     model = UserBalance
     template = 'home/billing.html'
+
+
+class GeneratorFormView(LoginRequiredMixin, FormView):
+    model = DocumentsFields
+    form_class = DocumentsFieldsForm
+    template_name = 'home/forms.html'
+    context_object_name = 'country'
+    success_url = '/home/profile/'
+
+    def get_form_class(self):
+        return super().get_form_class()
+
+    def get_form_kwargs(self):
+        kwargs = {'initial': self.get_initial()}
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+
+        return kwargs
+
+    def form_valid(self, form):
+        self.object = form.save()
+        r_info = str(self.request.path.split('/')[-2:-1])
+        country = re.sub("[^A-Za-z0-9]", "", r_info)
+        document_type = form.cleaned_data['document_type']
+        country_code = form.cleaned_data['country_code']
+        surname = form.cleaned_data['surname']
+        given_names = form.cleaned_data['given_names']
+        document_number = form.cleaned_data['document_number']
+        nationality = form.cleaned_data['nationality']
+        birth_date = form.cleaned_data['birth_date']
+        sex = form.cleaned_data['sex']
+        expiry_date = form.cleaned_data['expiry_date']
+        photo_document = form.cleaned_data['photo_document']
+        remove_bg = form.cleaned_data['remove_bg']
+        get_exif_info = form.cleaned_data['get_exif_info']
+        background_image = form.cleaned_data['background_image']
+
+        mrz = MRVACodeGenerator(
+            document_type, country_code, surname, given_names, document_number, nationality, birth_date, sex,
+            expiry_date, transliteration=dictionary.latin_based(),
+            force=False)
+
+        save_after_main_data_p = write_main_data(country, mrz, self.request.user, **form.cleaned_data)
+
+        if remove_bg == True:
+            path = remove_background(photo_document)
+            all_done = paster_photo(self.request.user, country, save_after_main_data_p,
+                                    path, get_exif_info, background_image)
+            print('path without bg', all_done)
+        else:
+            all_done = paster_photo(self.request.user, country, save_after_main_data_p,
+                                    photo_document, get_exif_info, background_image)
+            print('path with', all_done)
+        return super().form_valid(form)
 
 
 @login_required(login_url="/login/")

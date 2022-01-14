@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block balance %}
+
+{% endblock balance %}
+<div class="container">
+    <div class="row">
+        <h5>Баланс: </h5>
+    </div>
+</div>
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h5>Your generated documents</h5>
+        {% for file in files %}
+            <div class="col">
+            <img class="img-fluid" src="{{ MEDIA_ROOT }}/{{ file }}">
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+

@@ -17,7 +17,9 @@ INSTALLED_APPS = [
     'home',
     'bootstrap5',
     'wallets',
-    'django_bootstrap5']
+    'django_bootstrap5',
+    'confighelper',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
