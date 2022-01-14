@@ -1,7 +1,0 @@
-{% extends 'bootstrap.html' %}
-{% load django_bootstrap5 %}
-
-{% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-{% if user.is_authenticated %}
-    {% block content %}{% endblock %}
-{% endif %}
