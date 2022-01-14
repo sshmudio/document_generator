@@ -16,6 +16,7 @@ class DocumentsFieldsForm(forms.ModelForm):
             'birth_date',
             'sex',
             'expiry_date',
+            'issue_date',
             'optional_data',
             'photo_document',
             'remove_bg',
@@ -23,9 +24,9 @@ class DocumentsFieldsForm(forms.ModelForm):
             'background_image',
         ]
 
-    def save(self):
-        new_document = DocumentsFields.objects.create(**self.cleaned_data)
-        return new_document
+    # def save(self):
+    #     new_document = DocumentsFields.objects.create(**self.cleaned_data)
+    #     return new_document
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,6 +39,7 @@ class DocumentsFieldsForm(forms.ModelForm):
         self.fields['birth_date'].initial = '901212'
         self.fields['sex'].initial = 'F'
         self.fields['expiry_date'].initial = '291212'
+        self.fields['issue_date'].initial = '191212'
         self.fields['optional_data'].initial = '12121212'
 
 

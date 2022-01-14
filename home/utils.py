@@ -29,12 +29,12 @@ class ObjectsProfileMixin:
 
     def get(self, request):
         files = []
-        for filepath in glob.iglob(f'media/out/{request.user}/**/*.png', recursive=True):
+        for filepath in glob.iglob(f'media/{request.user}/done-*.png', recursive=True):
             files.append(filepath)
-        print(files)
         context = {
             'objects': UserBalance.objects.filter(username=request.user),
             'files': files,
+            'files_name': str([x for x in files]).replace(f'media/{request.user}/', ''),
 
         }
 

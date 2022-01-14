@@ -16,6 +16,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import DocForm, StateCardUsaForm, UsaVisaForm, DocumentsFieldsForm
 from .utils import ObjectsHomeMixin, ObjectsProfileMixin
 from confighelper.models import DocumentsFields
+from plow.basecreator import Imager
 
 
 class UserProfile(LoginRequiredMixin, ObjectsProfileMixin,  View):
@@ -38,7 +39,7 @@ class GeneratorFormView(LoginRequiredMixin, FormView):
     model = DocumentsFields
     form_class = DocumentsFieldsForm
     template_name = 'home/forms.html'
-    context_object_name = 'country'
+    context_object_name = 'objects'
     success_url = '/home/profile/'
 
     def get_form_class(self):
@@ -55,7 +56,7 @@ class GeneratorFormView(LoginRequiredMixin, FormView):
         return kwargs
 
     def form_valid(self, form):
-        self.object = form.save()
+        # self.object = form.save()
         r_info = str(self.request.path.split('/')[-2:-1])
         country = re.sub("[^A-Za-z0-9]", "", r_info)
         document_type = form.cleaned_data['document_type']
@@ -67,6 +68,7 @@ class GeneratorFormView(LoginRequiredMixin, FormView):
         birth_date = form.cleaned_data['birth_date']
         sex = form.cleaned_data['sex']
         expiry_date = form.cleaned_data['expiry_date']
+        issue_date = form.cleaned_data.get('issue_date')
         photo_document = form.cleaned_data['photo_document']
         remove_bg = form.cleaned_data['remove_bg']
         get_exif_info = form.cleaned_data['get_exif_info']
@@ -76,19 +78,30 @@ class GeneratorFormView(LoginRequiredMixin, FormView):
             document_type, country_code, surname, given_names, document_number, nationality, birth_date, sex,
             expiry_date, transliteration=dictionary.latin_based(),
             force=False)
+        kw = {
+            'document_type': form.cleaned_data['document_type'],
+            'country_code': form.cleaned_data['country_code'],
+            'surname': form.cleaned_data['surname'],
+            'given_names': form.cleaned_data['given_names'],
+            'document_number': form.cleaned_data['document_number'],
+            'nationality': form.cleaned_data['nationality'],
+            'birth_date': form.cleaned_data['birth_date'],
+            'sex': form.cleaned_data['sex'],
+            'expiry_date': form.cleaned_data['expiry_date'],
+            'issue_date': form.cleaned_data.get('issue_date'),
+            'optional_data': form.cleaned_data['optional_data']
+        }
+        im = Imager(photo_document, background_image, get_exif_info, True)
+        withoutbginfo = im.info_paste(self.request.user, str(mrz), **kw)
+        im.paste_background(withoutbginfo)
 
-        save_after_main_data_p = write_main_data(country, mrz, self.request.user, **form.cleaned_data)
-
-        if remove_bg == True:
-            path = remove_background(photo_document)
-            all_done = paster_photo(self.request.user, country, save_after_main_data_p,
-                                    path, get_exif_info, background_image)
-            print('path without bg', all_done)
-        else:
-            all_done = paster_photo(self.request.user, country, save_after_main_data_p,
-                                    photo_document, get_exif_info, background_image)
-            print('path with', all_done)
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["objects"] = UserBalance.objects.filter(username=self.request.user)
+        return context
 
 
 @login_required(login_url="/login/")

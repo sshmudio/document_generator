@@ -17,7 +17,6 @@ INSTALLED_APPS = [
     'home',
     'bootstrap5',
     'wallets',
-    'django_bootstrap5',
     'confighelper',
 ]
 
@@ -101,22 +100,3 @@ LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
 INTERNAL_IPS = [
     '93.73.62.199',
 ]
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'debug.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    },
-}

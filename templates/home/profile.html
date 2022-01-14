@@ -14,12 +14,12 @@
 <div class="container">
     <div class="row">
         <h5>Your generated documents</h5>
-        {% for file in files %}
-            <div class="col">
-            <img class="img-fluid" src="{{ MEDIA_ROOT }}/{{ file }}">
-            </div>
+        {% for obj in files %}
+        <div class="col">
+            <p>{{ obj|cut:'media/' }}</p>
+            <img class="img-fluid" src="{{ MEDIA_ROOT }}/{{ obj }}">
+        </div>
         {% endfor %}
     </div>
 </div>
 {% endblock content %}
-

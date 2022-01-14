@@ -31,6 +31,7 @@ class DocumentsFields(models.Model):
     birth_date = models.CharField(verbose_name='birth_date', max_length=25, default='birth_date')
     sex = models.CharField(verbose_name='sex', max_length=25, default='sex')
     expiry_date = models.CharField(verbose_name='expiry_date', max_length=25, default='expiry_date')
+    issue_date = models.CharField(verbose_name='issue_date', max_length=25, default='issue_date')
     optional_data = models.CharField(verbose_name='optional_data', max_length=25, default='optional_data', blank=True)
     photo_document = models.ImageField(verbose_name="Photo iD", upload_to="media/cfg/usa/usavisa/", blank=True)
     remove_bg = models.BooleanField(verbose_name='Remove background [BETA]', default=False)

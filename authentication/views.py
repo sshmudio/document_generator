@@ -10,6 +10,9 @@ from django.shortcuts import render
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('home/')
+
     form = LoginForm(request.POST)
     msg = None
     if request.method == "POST":
@@ -29,6 +32,9 @@ def login_view(request):
 
 
 def register_user(request):
+    if request.user.is_authenticated:
+        return redirect('home/')
+
     msg = None
     success = False
     if request.method == "POST":

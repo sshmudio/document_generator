@@ -15,7 +15,9 @@ urlpatterns = [
     path('italy/', GeneratorFormView.as_view(), name='italy'),
     path('profile/', UserProfile.as_view(), name='profile'),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 def entry_not_found(request, exception):
