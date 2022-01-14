@@ -1,0 +1,71 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="row">
+              <div class="col-md-6 col-6">
+                <div class="card">
+                  <div class="card-header mx-4 p-3 text-center">
+                    <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                      <i class="fas fa-wallet"></i>
+                    </div>
+                  </div>
+                  <div class="card-body pt-0 p-3 text-center">
+
+                    <h6 class="text-center mb-0">You Balance</h6>
+                    <hr class="horizontal dark my-6 ">
+                    {% for object in objects %}
+                    <h5 class="mb-0">{{ object.user_balance }} USD</h5>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mb-lg-0 mb-4">
+            <div class="card mt-4">
+              <div class="card-header pb-0 p-3">
+                <div class="row">
+                  <div class="col-6 d-flex align-items-center">
+                  </div>
+                  <div class="col-6 text-end">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6 mb-md-2 mb-4">
+                    <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
+                      {% comment %} <img class="me-3 mb-0" src="/static/assets/wallets/btc.png" alt="logo"> {% endcomment %}
+                      {% for object in objects %}
+                      <h6 class="mb-0">{{ object.wallet }}</h6>
+                      {% endfor %}
+                    </div>
+                  </div>
+              {% comment %} <form action="" method="POST">
+              {% for field in form %}
+                {{ field }}
+              {% endfor %}
+
+              </form> {% endcomment %}
+
+              <div class="container">
+              <table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th>#</th>
+      <th>Date</th>
+      <th>Sum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% comment %} <th scope="row">{{transaction.trans}}</th> {% endcomment %}
+    </tr>
+  </tbody>
+</table>
+</div>
+{% endblock content %}

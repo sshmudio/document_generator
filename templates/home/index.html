@@ -1,0 +1,77 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Document generator {% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">USA</h5>
+                    <p class="card-text">State Card</p>
+                    {% for object in objects %}
+                    {% if object.user_balance < 3 %}
+                    <a href="{% url 'billing' %}" class="btn btn-primary">Top-Up</a>
+                    {% else %}
+                    <a href="{% url 'usaid' %}" class="btn btn-primary">Get for 3$</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Ukraine</h5>
+                    <p class="card-text">International passport</p>
+                    {% for object in objects %}
+
+                    {% if object.user_balance < 1 %}
+                    <a href="{% url 'billing' %}" class="btn btn-primary">Top-Up</a>
+                    {% else %}
+                    <a href="{% url 'uaid' %}" class="btn btn-primary">Get for 1$</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">USA VISA</h5>
+                    <p class="card-text">(PASSPORT)</p>
+                    {% for object in objects %}
+
+                    {% if object.user_balance < 3 %}
+                    <a href="{% url 'billing' %}" class="btn btn-primary">Top-Up</a>
+                    {% else %}
+                    <a href="{% url 'usavisa' %}" class="btn btn-primary">Get for 3$</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row py-2">
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Italy</h5>
+                    <p class="card-text">International passport</p>
+                    {% for object in objects %}
+                    {% if object.user_balance < 3 %}
+                    <a href="{% url 'billing' %}" class="btn btn-primary">Top-Up</a>
+                    {% else %}
+                    <a href="{% url 'italy' %}" class="btn btn-primary">Get for 3$</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
