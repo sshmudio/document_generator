@@ -1,12 +1,10 @@
-import os
-from django.contrib.messages import constants as message_constants
 from pathlib import Path
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0*cr9siyt1%cead+5gz77oiws%$$+oq6di$or6m#gvl@dtsjv!'
-DEBUG = False
-MESSAGE_LEVEL = message_constants.ERROR
-ALLOWED_HOSTS = ['docplow.cf', '167.71.61.95']
+DEBUG = True
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -19,11 +17,7 @@ INSTALLED_APPS = [
     'home',
     'bootstrap5',
     'wallets',
-    'django_bootstrap5',
-    'djmoney',
-    'django_user_agents',
-    'django_countries',
-]
+    'django_bootstrap5']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -33,7 +27,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
