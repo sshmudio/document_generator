@@ -3,7 +3,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0*cr9siyt1%cead+5gz77oiws%$$+oq6di$or6m#gvl@dtsjv!'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
@@ -100,3 +100,4 @@ LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
 INTERNAL_IPS = [
     '93.73.62.199',
 ]
+LOGOUT_REDIRECT_URL = '/'

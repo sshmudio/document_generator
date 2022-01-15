@@ -25,6 +25,7 @@
 				{% endfor %}
 				{% comment %} <a class="btn btn-primary" href="{% url 'billing' %}" role="button">Top-Up</a>
 				{% endcomment %}
+				<a class="navbar-text me-3 p-3" href="{% url 'logout' %}">Log Out</a>
 				{% else %}
 				<a href="{% url 'login' %}">login</a>
 				{% endif %}

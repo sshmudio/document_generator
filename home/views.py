@@ -175,3 +175,7 @@ def usavisa(request):
         form = UsaVisaForm()
 
     return render(request, 'home/usaid.html', {'form': form})
+
+
+def lgut(request):
+    return redirect('/home/')

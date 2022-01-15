@@ -10,13 +10,9 @@ from mrz.generator.mrva import MRVACodeGenerator, dictionary
 class Imager:
 
     main_font = ImageFont.truetype('media/cfg/font/italy_main.ttf', 34)
-    print('Есть')
     font_vertical_id = ImageFont.truetype('media/cfg/font/SNEgCheck1MP.ttf', 120)
-    print('Есть')
     mrz_font = ImageFont.truetype('media/cfg/font/cour.ttf', 47)  # Шрифт для MRZ
-    print('Есть')
     doc_template_path = 'media/template_document/italy/template.png'
-    print('Есть')
     font_color = 40, 40, 40  # Цвет основного шрифта
     document_type = 480, 1145  # Тип документа
     country_code = 620, 1140  # Код страны
@@ -56,7 +52,7 @@ class Imager:
             else:
                 newData.append(item)
         img.putdata(newData)
-        image_no_bg_path = f'media/cfg/withoutbg/without_bg-{random.randint(1000,9999)}.png'
+        image_no_bg_path = f'media/{self.user}/without_bg-{random.randint(1000,9999)}.png'
         img.save(image_no_bg_path)
         return img
 
@@ -82,10 +78,10 @@ class Imager:
             sec_photo.putalpha(120)
             template.alpha_composite(sec_photo, self.coord_second_photo)
 
-        template.paste(photo_id, self.coord_photo)
+        template.paste(photo_id, self.coord_photo, photo_id)
         p = Path()
         print(p)
-        filename = f'media/cfg/tmp/{random.randint(11111, 99999999)}.png'
+        filename = f'media/{self.user}/{random.randint(11111, 99999999)}.png'
         template.save(filename)
         return filename
 
