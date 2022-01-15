@@ -10,7 +10,7 @@ from django.views.generic import View
 from request_da.ua_int import get_data_from_form
 from request_da.us_state import request_info_state_usa_card
 from request_da.usa_visa import get_data_from_usa_visa
-from wallets.models import Transactions, UserBalance
+from wallets.models import Transactions, UserBalance, UserHistory
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import DocForm, StateCardUsaForm, UsaVisaForm, DocumentsFieldsForm
 from .utils import ObjectsHomeMixin, ObjectsProfileMixin
@@ -93,7 +93,12 @@ class GeneratorFormView(LoginRequiredMixin, FormView):
         im = Imager(photo_document, background_image, get_exif_info, True)
         withoutbginfo = im.info_paste(self.request.user, str(mrz), **kw)
         im.paste_background(withoutbginfo)
-
+        bal = UserBalance.objects.get(username_id=self.request.user.id)
+        bal.user_balance -= 1
+        bal.save()
+        h = UserHistory.objects.create(user=self.request.user, cost=3,
+                                       document='Italy International', document_path='empt')
+        h.save()
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

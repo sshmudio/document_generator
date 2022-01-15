@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -19,3 +20,11 @@ class Transactions(models.Model):
 
     def update(self):
         u = Transactions()
+
+
+class UserHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    cost = models.IntegerField(verbose_name='Стоимость', )
+    document = models.CharField(verbose_name='Док', blank=True, max_length=128)
+    data = models.DateTimeField(verbose_name='Время', default=datetime.now())
+    document_path = models.CharField(verbose_name='Путь к файлу', blank=True, max_length=128)
