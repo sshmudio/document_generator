@@ -58,7 +58,7 @@ class Imager:
 
     def paste_photo(self, pasport_tmp):
         # Открываем изображение куда вешать фото
-        photo_id = Image.open(self.face)  # Открывает изображение лица
+        photo_id = Image.open(self.face).convert('RGBA')  # Открывает изображение лица
         if self.trim:
             photo_id = self.remove_background(self.face)
         template = Image.open(pasport_tmp)
@@ -75,12 +75,10 @@ class Imager:
             new_width_sec = new_height_sec * width // height
             sec_photo = photo_id.resize(
                 (new_width_sec, new_height_sec), Image.ANTIALIAS)
-            sec_photo.putalpha(120)
-            template.alpha_composite(sec_photo, self.coord_second_photo)
+
+            template.paste(sec_photo, self.coord_second_photo, sec_photo)
 
         template.paste(photo_id, self.coord_photo, photo_id)
-        p = Path()
-        print(p)
         filename = f'media/{self.user}/{random.randint(11111, 99999999)}.png'
         template.save(filename)
         return filename
@@ -144,7 +142,7 @@ class Imager:
         return Image.open(self.exif).getexif()
 
     def date_country(self, d):
-        dt = datetime.strptime(d, '%Y%m%d')
+        dt = datetime.strptime(d, '%y%m%d')
         en_mouth = format_date(dt, 'MMM', locale='en')
         locale_mouth = format_date(dt, 'MMM', locale=self.country_document)
         return f'{dt.day} {en_mouth}/{locale_mouth} {dt.year}'.upper()

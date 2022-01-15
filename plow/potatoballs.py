@@ -192,7 +192,7 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     img_exif_data = im.getexif()
     passport_temp_crop = passport_temp.copy()
     w, h = passport_temp_crop.size
-    nh = 900  # Высота
+    nh = 300  # Высота
     nw = int(nh * w / h)
     im = passport_temp_crop.resize((nw, nh), Image.ANTIALIAS)
     im = passport_temp.copy()
@@ -206,7 +206,7 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     alpha.paste(circle.crop((0, rad, rad, rad * 2)), (0, h - rad))
     alpha.paste(circle.crop((rad, 0, rad * 2, rad)), (w - rad, 0))
     alpha.paste(circle.crop((rad, rad, rad * 2, rad * 2)), (w - rad, h - rad))
-    # im.putalpha(alpha)
+    im.putalpha(alpha)
     background_width, background_height = background.size
     passport_width, passport_height = im.size
 

@@ -180,8 +180,7 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
         3].point(lambda i: i * 90 // 100)
     print(paste_mask_passport_photo)
 
-    passport_temp.paste(passport_photo, (60, SH + 125),
-                        mask=paste_mask_passport_photo)
+    passport_temp.paste(passport_photo, (60, SH + 195), paste_mask_passport_photo)
 
     img_lis = random.choice(os.listdir('media/cfg/sing_png'))
     sing = Image.open("media/cfg/sing_png/" +
@@ -189,16 +188,16 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     sing_passport_photo = sing.split()[
         3].point(lambda i: i * 90 // 100)
     passport_temp.paste(sing, (900, SH + 445), mask=sing_passport_photo)
+    passport_temp.save('im.png')
     im = Image.open(exif_infor)
     img_exif_data = im.getexif()
 
-    # passport_temp_crop = passport_temp.crop((13, 13, 1330, 1873))
-    # passport_temp_crop = passport_temp.copy()
-    # w, h = passport_temp_crop.size
-    # nh = 900  # Высота
-    # nw = int(nh * w / h)
-    # im = passport_temp_crop.resize((nw, nh), Image.ANTIALIAS)
-    im = passport_temp.copy()
+    passport_temp_crop = passport_temp.crop((13, 13, 1330, 1873))
+    passport_temp_crop = passport_temp.copy()
+    w, h = passport_temp_crop.size
+    nh = 900  # Высота
+    nw = int(nh * w / h)
+    im = passport_temp_crop.resize((nw, nh), Image.ANTIALIAS)
     rad = 15
     circle = Image.new('L', (rad * 2, rad * 2), 0)
     draw = ImageDraw.Draw(circle)
@@ -218,7 +217,7 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     # background_new = Image.new("RGBA", (passport_width+13,
     #                                     passport_height+13), (60, 60, 60))
     # background.paste(background_new, position)
-    background.paste(im, position, mask=im)
+    background.paste(im, ((background.size[0] // 2) // 2, (background.size[1] // 2) // 2), mask=im)
 
     all_done_path = f'media/cfg/out/passport{random.randint(1000,9999)}.jpeg'
     background.convert('RGB').save(all_done_path, exif=img_exif_data)

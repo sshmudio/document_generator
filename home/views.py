@@ -12,7 +12,6 @@ from request_da.us_state import request_info_state_usa_card
 from request_da.usa_visa import get_data_from_usa_visa
 from wallets.models import Transactions, UserBalance
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from .forms import DocForm, StateCardUsaForm, UsaVisaForm, DocumentsFieldsForm
 from .utils import ObjectsHomeMixin, ObjectsProfileMixin
 from confighelper.models import DocumentsFields

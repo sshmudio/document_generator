@@ -1,3 +1,4 @@
+# Раюботает с usa id card
 import random
 from PIL import Image, ImageDraw, ImageFont
 
@@ -96,20 +97,20 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     img_exif_data = im.getexif()
     passport_temp_crop = passport_temp.copy()
     w, h = passport_temp_crop.size
-    nh = 900  # Высота
-    nw = int(nh * w / h)
+    nh = 250  # Высота
+    nw = (nh * w) // h
     im = passport_temp_crop.resize((nw, nh), Image.ANTIALIAS)
-    im = passport_temp.copy()
+    # im = passport_temp.copy().resize((nw, nh), Image.ANTIALIAS)
     rad = 15
     circle = Image.new('L', (rad * 2, rad * 2), 0)
     draw = ImageDraw.Draw(circle)
     draw.ellipse((0, 0, rad * 2, rad * 2), fill=255)
-    alpha = Image.new('L', im.size, 255)
+    # alpha = Image.new('L', im.size, 255)
     w, h = im.size
-    alpha.paste(circle.crop((0, 0, rad, rad)), (0, 0))
-    alpha.paste(circle.crop((0, rad, rad, rad * 2)), (0, h - rad))
-    alpha.paste(circle.crop((rad, 0, rad * 2, rad)), (w - rad, 0))
-    alpha.paste(circle.crop((rad, rad, rad * 2, rad * 2)), (w - rad, h - rad))
+    # alpha.paste(circle.crop((0, 0, rad, rad)), (0, 0))
+    # alpha.paste(circle.crop((0, rad, rad, rad * 2)), (0, h - rad))
+    # alpha.paste(circle.crop((rad, 0, rad * 2, rad)), (w - rad, 0))
+    # alpha.paste(circle.crop((rad, rad, rad * 2, rad * 2)), (w - rad, h - rad))
     # im.putalpha(alpha)
     background_width, background_height = background.size
     passport_width, passport_height = im.size
@@ -119,7 +120,7 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     # background_new = Image.new("RGBA", (passport_width+13,
     #                                     passport_height+13), (60, 60, 60))
     # background.paste(background_new, position)
-    background.paste(im, position, mask=im)
+    background.paste(im, ((background.size[0] // 2) // 2, (background.size[1] // 2) // 2), mask=im)
 
     all_done_path = f'media/cfg/out/idcard{random.randint(1000,9999)}.jpeg'
 
