@@ -1,15 +1,15 @@
 {% extends 'layouts/base.html' %}
+{% block title %}{{ country }}{% endblock %}
 
-{% block title %}{{ country }}{% endblock %} 
+{% block forms %}
 
-{% block content %}
+<div class="form-group">
+	<form method="post" enctype="multipart/form-data">{% csrf_token %}
 
-<form method="post" enctype="multipart/form-data">{% csrf_token %}
-  <div class="form-group">
-    <label>{{ field.label }}</label>
-      {{ form.as_ul }}
-  </div>
-  <button type="submit" class="btn btn-success">Generate</button>
-</form>
+		<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+		{{ form.as_p }}
+		<button type="submit" class="btn btn-success">Generate</button>
+	</form>
+</div>
 
-{% endblock content %}
+{% endblock forms %}

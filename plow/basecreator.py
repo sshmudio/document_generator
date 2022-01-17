@@ -86,10 +86,15 @@ class Imager:
     def paste_background(self, tmp):
         t = Image.open(self.paste_photo(tmp))
         background = Image.open(self.bac)
-        template = t.resize(
-            (background.size[0] // 3, background.size[1] // 3), Image.ANTIALIAS)
+        w, h = t.size
+        nh = int(background.size[1] / 1.3)  # Высота
+        nw = int(nh * w / h)
+
+        # template = t.resize(
+        #     (background.size[0] // 3, background.size[1] // 3), Image.ANTIALIAS)
+        template = t.resize((nw, nh), Image.ANTIALIAS)
         background.paste(
-            template, ((background.size[0] // 2) // 2, (background.size[1] // 2) // 2), template)
+            template, ((int(background.size[0] / 100 * 10)), int(background.size[1] / 100 * 10)), template)
         filename = f'media/{self.user}/done-{datetime.now()}.png'
         background.save(filename, exif=self.exif_paster())
         print(f'Фото создано {filename}')

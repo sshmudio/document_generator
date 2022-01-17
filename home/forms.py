@@ -69,11 +69,12 @@ class DocumentsFieldsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['document_type'].initial = 'V'
-        self.fields['country_code'].initial = 'USA'
+        # self.fields['document_type'].widget.attrs.update({'size': 1, 'class': 'form-control'})
+        self.fields['country_code'].initial = 'ITA'
         self.fields['surname'].initial = 'JOHN'
         self.fields['given_names'].initial = 'PETRUCHI'
         self.fields['document_number'].initial = '1212122'
-        self.fields['nationality'].initial = 'USA'
+        self.fields['nationality'].initial = 'ITA'
         self.fields['birth_date'].initial = '901212'
         self.fields['sex'].initial = 'F'
         self.fields['expiry_date'].initial = '291212'
