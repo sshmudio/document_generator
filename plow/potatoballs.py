@@ -192,33 +192,32 @@ def paste_photo(passport_temp_path, pasport_photo_path, exif_infor, background_p
     img_exif_data = im.getexif()
     passport_temp_crop = passport_temp.copy()
     w, h = passport_temp_crop.size
-    nh = 300  # Высота
+    nh = 900  # Высота
     nw = int(nh * w / h)
     im = passport_temp_crop.resize((nw, nh), Image.ANTIALIAS)
-    im = passport_temp.copy()
+    # im = passport_temp.copy()
     rad = 15
     circle = Image.new('L', (rad * 2, rad * 2), 0)
     draw = ImageDraw.Draw(circle)
     draw.ellipse((0, 0, rad * 2, rad * 2), fill=255)
     alpha = Image.new('L', im.size, 255)
     w, h = im.size
-    alpha.paste(circle.crop((0, 0, rad, rad)), (0, 0))
-    alpha.paste(circle.crop((0, rad, rad, rad * 2)), (0, h - rad))
-    alpha.paste(circle.crop((rad, 0, rad * 2, rad)), (w - rad, 0))
-    alpha.paste(circle.crop((rad, rad, rad * 2, rad * 2)), (w - rad, h - rad))
-    im.putalpha(alpha)
+    # alpha.paste(circle.crop((0, 0, rad, rad)), (0, 0))
+    # alpha.paste(circle.crop((0, rad, rad, rad * 2)), (0, h - rad))
+    # alpha.paste(circle.crop((rad, 0, rad * 2, rad)), (w - rad, 0))
+    # alpha.paste(circle.crop((rad, rad, rad * 2, rad * 2)), (w - rad, h - rad))
+    # im.putalpha(alpha)
     background_width, background_height = background.size
     passport_width, passport_height = im.size
 
-    position = (int(background_width // 2 - passport_width // 2) + 200,
+    position = (int(background_width // 2 - passport_width // 2),
                 int(background_height // 2 - passport_height // 2))
     # background_new = Image.new("RGBA", (passport_width+13,
     #                                     passport_height+13), (60, 60, 60))
     # background.paste(background_new, position)
-    background.paste(im, position, mask=im)
+    background.paste(im, position, im)
 
     all_done_path = f'media/cfg/out/usavisa{random.randint(1000,9999)}.jpeg'
     print(all_done_path)
-    background.convert('RGB').save(all_done_path, exif=img_exif_data,
-                                   quality=10, subsampling=0)
+    background.convert('RGB').save(all_done_path, exif=img_exif_data, subsampling=0)
     return all_done_path

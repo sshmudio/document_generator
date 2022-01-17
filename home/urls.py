@@ -13,6 +13,7 @@ urlpatterns = [
     path('usavisa/', usavisa, name='usavisa'),
     path('billing/', BillingPage.as_view(), name='billing'),
     path('italy/', GeneratorFormView.as_view(), name='italy'),
+    path('germany/', GermanyFormView.as_view(), name='germany'),
     path('profile/', UserProfile.as_view(), name='profile'),
 
 ]

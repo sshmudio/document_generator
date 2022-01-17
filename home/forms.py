@@ -1,6 +1,43 @@
 from django import forms
 from .models import DocUkraineInternational, StateCardUsa, UsaVisa
 from confighelper.models import DocumentsFields
+# from django.core.exceptions import ValidationError
+
+
+class GermanyDocForm(forms.ModelForm):
+    class Meta:
+        model = DocumentsFields
+        fields = [
+            'document_type',
+            'country_code',
+            'surname',
+            'given_names',
+            'document_number',
+            'nationality',
+            'birth_date',
+            'sex',
+            'expiry_date',
+            'issue_date',
+            'optional_data',
+            'photo_document',
+            'remove_bg',
+            'get_exif_info',
+            'background_image',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['document_type'].initial = 'P'
+        self.fields['country_code'].initial = 'DEU'
+        self.fields['surname'].initial = 'DEUTSCH'
+        self.fields['given_names'].initial = 'DEUTSCH'
+        self.fields['document_number'].initial = 'CG313WPXP'
+        self.fields['nationality'].initial = 'DEUTSCH'
+        self.fields['birth_date'].initial = '901212'
+        self.fields['sex'].initial = 'M'
+        self.fields['expiry_date'].initial = '291212'
+        self.fields['issue_date'].initial = '191212'
+        self.fields['optional_data'].initial = '12121212'
 
 
 class DocumentsFieldsForm(forms.ModelForm):
@@ -24,9 +61,10 @@ class DocumentsFieldsForm(forms.ModelForm):
             'background_image',
         ]
 
-    # def save(self):
-    #     new_document = DocumentsFields.objects.create(**self.cleaned_data)
-    #     return new_document
+    # def clean_country_code(self):
+    #     country_code = self.cleaned_data.get('country_code')
+    #     if len(country_code) > 3:
+    #         raise ValidationError('Поле не может быть длинее 3 символов')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

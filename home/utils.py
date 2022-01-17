@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from pathlib import Path
-from wallets.models import UserBalance
+from wallets.models import UserBalance, UserHistory
 import glob
 
 
@@ -17,6 +17,7 @@ class ObjectsHomeMixin:
         context = {
             'objects': objects,
             'dirs': dirs,
+            'history': UserHistory.objects.filter(user=request.user),
 
         }
 
