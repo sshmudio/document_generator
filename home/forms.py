@@ -1,7 +1,6 @@
 from django import forms
 from .models import DocUkraineInternational, StateCardUsa, UsaVisa
 from confighelper.models import DocumentsFields
-# from django.core.exceptions import ValidationError
 
 
 class GermanyDocForm(forms.ModelForm):
@@ -55,8 +54,8 @@ class DocumentsFieldsForm(forms.ModelForm):
             'expiry_date',
             'issue_date',
             'optional_data',
-            'photo_document',
             'remove_bg',
+            'photo_document',
             'get_exif_info',
             'background_image',
         ]
@@ -69,7 +68,7 @@ class DocumentsFieldsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['document_type'].initial = 'V'
-        # self.fields['document_type'].widget.attrs.update({'size': 1, 'class': 'form-control'})
+        self.fields['document_type'].widget.attrs.update({'size': 1, 'class': 'form-control'})
         self.fields['country_code'].initial = 'ITA'
         self.fields['surname'].initial = 'JOHN'
         self.fields['given_names'].initial = 'PETRUCHI'
@@ -80,6 +79,9 @@ class DocumentsFieldsForm(forms.ModelForm):
         self.fields['expiry_date'].initial = '291212'
         self.fields['issue_date'].initial = '191212'
         self.fields['optional_data'].initial = '12121212'
+        self.fields['photo_document'].widget.attrs.update({'size': 1, 'class': 'form-control form-control-sm'})
+        self.fields['get_exif_info'].widget.attrs.update({'size': 1, 'class': 'form-control form-control-sm'})
+        self.fields['background_image'].widget.attrs.update({'size': 1, 'class': 'form-control form-control-sm'})
 
 
 class DocForm(forms.ModelForm):
