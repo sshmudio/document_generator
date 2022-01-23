@@ -165,7 +165,7 @@ class Imager:
         return fontimage
 
     def paste_signature(self):
-        return
+        pass
 
 
 # def main():
