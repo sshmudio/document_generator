@@ -1,6 +1,8 @@
 *.log
 .vscode
 *.pot
+poetry.lock
+db.sqlite
 *.pyc
 __pycache__/
 local_settings.py
